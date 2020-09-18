@@ -1,0 +1,29 @@
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    const formData = new FormData();
+    formData.append('name', 'zerocho'); // 현재 키 데이터 추가
+    formData.append('item', 'orange');
+    formData.append('item', 'melon');
+    formData.has('item');   // 키 값 존재 여부
+    formData.has('money');
+    formData.get('item');   // 키 데이터 조회 (첫번째 데이터만 반환)
+    formData.getAll('item');    // 키 전체 데이터 조회
+    formData.append('test', ['hi', 'zero']);
+    formData.get('test');
+    formData.delete('test');    // 키 삭제
+    formData.get('test');
+    formData.set('item', 'apple');  // 현재 키 데이터 수정
+    formData.getAll('item');
+
+    console.log(formData);
+    
+    (async () => {
+        try {
+            const result = await axios.post('https://www.zerocho.com/api/post/formdata', formData);
+            console.log(result);
+            console.log(result.data);
+        } catch (error) {
+            console.error(error);
+        }
+    })();
+</script>

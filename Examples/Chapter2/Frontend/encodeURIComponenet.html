@@ -1,0 +1,15 @@
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    ( async () => {
+        try {
+            const result = await axios.get(`https://www.zerocho.com/api/search/${encodeURIComponent('노드')}`);
+            console.log(`https://www.zerocho.com/api/search/${encodeURIComponent('노드')}`);
+            console.log(result);
+            console.log(result.data);
+        } catch (error) {
+            console.error(error);
+        }
+    })();
+</script>
+
+<!-- encodeURIComponent : 서버에서 한글 처리가 안 되는 경우 사용, 한글 주소 부분만 encodeURIComponene(), 서버에서는 decodeURIComponent 사용해서 처리 -->
