@@ -1,0 +1,25 @@
+<h2>한 파일 전송</h2>
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="image" />
+    <input type="text" name="title" />
+    <button type="submit">업로드</button>
+</form>
+
+<br/>
+
+<h2>여러 파일 전송</h2>
+<form action="/uploadMultiple" method="post" enctype="multipart/form-data">
+    <input type="file" name="multiple" multiple/>
+    <input type="text" name="title" />
+    <button type="submit">업로드</button>
+</form>
+
+<br/>
+
+<h2>여러 파일 개별 첨부 전송</h2>
+<form action="/upload2" method="post" enctype="multipart/form-data">
+    <input type="file" name="image1" />
+    <input type="file" name="image2" />
+    <input type="text" name="title" />
+    <button type="submit">업로드</button>
+</form>

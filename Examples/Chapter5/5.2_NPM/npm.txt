@@ -1,0 +1,101 @@
+This utility will walk you through creating a package.json file.
+It only covers the most common items, and tries to guess sensible defaults.
+
+See `npm help init` for definitive documentation on these fields
+and exactly what they do.
+
+Use `npm install <pkg>` afterwards to install a package and
+save it as a dependency in the package.json file.
+
+Press ^C at any time to quit.
+package name: (chapter5) tutorial
+version: (1.0.0)
+description: node tutorial
+entry point: (index.js)
+test command:
+git repository:
+keywords:
+author:
+license: (ISC)
+About to write to D:\Git\Examples\Chapter5\package.json:
+
+{
+  "name": "tutorial",
+  "version": "1.0.0",
+  "description": "node tutorial",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+
+
+Is this OK? (yes)
+
+
+/**
+    프로젝트 최상위 폴더에서 npm init 실행.
+    version: 패키지 버전. npm의 버전은 다소 엄격하게 관리. 5.3절
+    entry point: 자바스크립트 실행 파일 진입점. 보통 마지막으로 module.exports를 하는 파일을 지정.
+    test command: 코드를 테스트할 때 입력할 명령어
+    git repository: 코드를 저장해둔 깃(Git) 저장소 주소를 의미.
+    keywords: npm 공식 홈페이지에서 패키지를 쉽게 찾을 수 있도록 해줌.
+    license: 해당 패키지 라이선스 입력
+
+    package.json 생성 됨.
+
+    * ISC, MIT, BSD 라이선스를 가진 패키지를 사용할 때는 사용한 패키지와 라이선스만 밝히면 자유롭게 사용 가능.
+     아파치 라이선스 패키지는 사용은 자유롭지만 특허권에 대한 제한이 포함.
+     GPL 라이선스 패키지는 GPL계열의 패키지를 사용한 패키지를 배포할 때는 자신의 패키지도 GPL로 배포하고
+     소스 코드도 공개해야 함.
+     라이선스별로 특징이 다르므로 사용 전에 반드시 라이선스를 확인.
+
+    npm audit 명령어 : 패키지 악성 코드 검사.
+    npm audit fix : npm 스스로 수정할 수 있는 취약점을 알아서 수정.
+
+    npm install 패키지명 (npm i 패키지명) : 패키지 설치
+    npm install --save-dev 패키지명 (npm -D 패키지명) : 개발용 패키지. 실제 배포 시에는 사용되지 않고 개발 중에만 사용되는 패키지.
+
+    npm install --global 패키지명 (npm i -g 패키지명) : 
+      전역 설치. 패키지를 현재 폴더의 node_modules에 설치하는 것이 아니라 npm이 설치되어 있는 폴더에 설치.
+      전역 설치라고 패키지를 모든 곳에서 사용한다는 것이 아니라 대부분 명령어로 사용하기 위해 전역 설치 함.
+      ex) npm install --global rimraf
+        - 리눅스 rm --rf명령을 윈도우에서도 사용할 수 있게 해주는 패키지.
+      전역 설치는 package.json에 남지 않아 다시 설치할 때 어려움.
+        - 패키지 설치 후 npm 패키지명 node_modules 명령어를 실행하면
+          전역 설치처럼 사용 가능해지고 package.json에도 기록이 남아 관리가 용이함.
+    패키지 버전 이해하기
+    노드 패키지들의 버전은 항상 세 자리로 이루어짐. SemVer(Semantic Versioning) 방식 버전 넘버링.
+
+    0.0.0
+    첫번째 자리(major) : 0번은 초기 개발 중. 1부터는 정식 버전. major버전은 하위 호환이 안 될 정도로 패키지 내용이 수정되었을 때 올림.
+                        ex) 1.5.0 > 2.0.0 으로 업데이트 시 에러 발생율이 큼.
+    두번재 자리(minor) : 하위 호환이 되는 기능 업데이트. ex) 1.5.0 > 1.6.0 경우 아무 문제가 없어야 함.
+    세번재 자리(patch) : 기능 추가 보다는 버그 수정.
+
+    새 버전을 배포한 후에 수정 내역이 있을 경우 major, minor, patch 버전 중 하나를 의미에 맞게 올려야 함.
+
+    package.json 문자
+    ^ : minor 버전까지만 설치하거나 업데이트
+    ~ : patch 버전까지만 설치하거나 업데이트
+
+    ^ 가 많은 이유는 minor버전까지는 하위 호환이 보장되기 때문.
+
+    @lastest : 안정된 최신 버전 패키지 설치.
+    @next : 가장 최근 배포판(알파, 베타 버전의 패키지를 설치할 수 있음)
+
+    npm outdated 명령어 : 업데이트할 수 있는 패키지가 있는지 확인.
+    npm update
+    npm uninstall 패키지명 : 해당 패키지 삭제
+    npm search 패키지명 : 배포된 npm 패키지 검색
+    npm info 패키지명 : 패키지 세부 정보
+    npm adduser : npm 공식 사이트 가입한 계정 로그인, 패키지 배포시 사용.
+    npm whoami : 로그인된 아이디
+    npm logout
+    npm version 버전 : 원하는 버전의 숫자를 넣으면 됨. 또는 major, minor, patch라는 문자열을 넣어 해당 부분의 숫자를 1 올릴 수 있음.
+                    ex) npm version 1.4.2 or npm version minor
+    npm publish : 자신이 만든 패키지 배포
+    npm unpublich : 배포한 패키지 제거(24시간 이내만 제거 가능)
+*/

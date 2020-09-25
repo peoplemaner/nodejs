@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/style.css">
+        {% block style %}
+        {% endblock %}
+    </head>
+    <body>
+        <header>헤더입니다.</header>
+        {% block content %}
+        {% endblock %}
+        <footer>푸터입니다.</footer>
+        {% block script %}
+        {% endblock %}
+    </body>
+</html>

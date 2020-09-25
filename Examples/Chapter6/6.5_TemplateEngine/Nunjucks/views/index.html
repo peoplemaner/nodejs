@@ -1,0 +1,47 @@
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+<button class="{{title}}" type="submit">전송</button>
+<input placeholder="{{title}} 연습" />
+<br/>
+
+<h2>변수 선언</h2>
+{% set node = 'Node.js' %}
+{% set js = 'Javascript' %}
+<p>{{node}}와 {{js}}</p>
+<br/>
+<h2>이스케이프</h2>
+<p>{{'<strong>이스케이프</strong>'}}</p>
+<p>{{'<strong>이스케이프 하지 않음</strong>' | safe }}</p>
+<br/>
+<h2>반복문</h2>
+<ul>
+    {% set fruits = ['사과', '배', '오렌지', '바나나', '복숭아'] %}
+    {% for item in fruits %}
+    <li>{{item}}</li>
+    {% endfor %}
+    {% for item in fruits %}
+    <li>{{loop.index}}번째 {{item}}</li>
+    {% endfor %}
+</ul>
+<br/>
+<h2>조건문</h2>
+{% set isLoggedIn = false %}
+{% if isLoggedIn %}
+<div>로그인 되었습니다.</div>
+{% else %}
+<div>로그인이 필요합니다.</div>
+{% endif %}
+
+{% set fruit = 'orange' %}
+{% if fruit === 'apple' %}
+<p>사과입니다.</p>
+{% elif fruit === 'banana' %}
+<p>바나나입니다.</p>
+{% elif fruit === 'orange' %}
+<p>오렌지입니다.</p>
+{% else %}
+<p>사과도 바나나도 오렌지도 아닙니다.</p>
+{% endif %}
+
+<div>{{'참' if isLoggedIn}}</div>
+<div>{{'참' if isLoggedIn else '거짓'}}</div>
