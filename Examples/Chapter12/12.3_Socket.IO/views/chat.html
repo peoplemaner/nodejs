@@ -1,0 +1,135 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>{{title}}</h1>
+<a href="/" id="exit-btn">방 나가기</a>
+<fieldset>
+    <legend>채팅 내용</legend>
+    <div id="chat-list">
+        {% for chat in chats %}
+            {% if chat.user === user %}
+                <div class="mine" style="color: {{chat.user}}">
+                    <div>{{chat.user}}</div>
+                    {% if chat.gif %}
+                    <img src="/gif/{{chat.gif}}">
+                    {% else %}
+                    <div>{{chat.chat}}</div>
+                    {% endif %}
+                </div>
+            {% elif chat.user === 'system' %}
+                <div class="system">
+                    <div>{{chat.chat}}</div>
+                </div>
+            {% else %}
+                <div class="other" style="color: {{chat.user}}">
+                    <div>{{chat.user}}</div>
+                    {% if chat.gif %}
+                        <img src="/gif/{{chat.gif}}">
+                    {% else %}
+                        <div>{{chat.chat}}</div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</fieldset>
+<form action="/chat" id="chat-form" method="post" enctype="multipart/form-data">
+    <label for="gif">GIF 올리기</label>
+    <input type="file" id="gif" name="gif" accept="image/png">
+    <input type="text" id="chat" name="chat">
+    <button type="submit">전송</button>
+</form>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io.connect('http://localhost:8005/chat', {
+        path: '/socket.io'
+    });
+
+    // 방 추가 시 호출 됨.
+    socket.on('join', (data) => {
+        const div = document.createElement('div');
+        div.classList.add('system');
+        const chat = document.createElement('div');
+        div.textContent = data.chat;
+        div.appendChild(chat);
+        document.querySelector('#chat-list').appendChild(div);
+    });
+    // 다른 사용자 나간 경우 호출 됨.
+    socket.on('exit', (data) => {
+        const div = document.createElement('div');
+        div.classList.add('system');
+        const chat = document.createElement('div');
+        div.textContent = data.chat;
+        div.appendChild(chat);
+        document.querySelector('#chat-list').appendChild(div);
+    });
+
+    // 사용자 채팅 입력 시 호출 됨.
+    socket.on('chat', (data) => {
+        const div = document.createElement('div');
+        // 사용자가 본인인지 확인
+        if (data.user === '{{user}}') {
+            div.classList.add('mine');
+        } else {
+            div.classList.add('other');
+        }
+        const name = document.createElement('div');
+        name.textContent = data.user;
+        div.appendChild(name);
+        if (data.chat) {
+            const chat = document.createElement('div');
+            chat.textContent = data.chat;
+            div.appendChild(chat);
+        } else {
+            const gif = document.createElement('img');
+            gif.src = '/gif/' + data.gif;
+            div.appendChild(gif);
+        }
+        div.style.color = data.user;
+        document.querySelector('#chat-list').appendChild(div);
+    });
+    document.querySelector('#chat-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (e.target.chat.value) {
+            axios.post('/room/{{room._id}}/chat', {
+                chat: this.chat.value
+            })
+                .then(() => {
+                    e.target.chat.value = '';
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+            
+            // 라우터 거치지 않고 채팅 구현
+            /*axios.post('/room/{{room._id}}/chat', {
+                room: '{{room._id}}',
+                user: '{{user}}',
+                chat: this.chat.value
+            });
+            e.target.chat.value = '';*/
+            
+        }
+    });
+    document.querySelector('#gif').addEventListener('change', (e) => {
+        console.log(e.target.files);
+        const formData = new FormData();
+        formData.append('gif', e.target.files[0]);
+        axios.post('/room/{{room._id}}/gif', formData)
+            .then(() => {
+                e.target.file = null;
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+    });
+</script>
+{% endblock %}
+
+<!--
+    채팅 메세지는 세 가지(mine, system, other)로 구분(메세지 종류에 따라 디자인 다르게 main.css 참조)
+    script부분은 socket.io 연결 부분, socket.io 이벤트 리스터, 폼 전송 부분으로 구분
+    chat 네임스페이스 적용
+    socket에는 join, exit 이벤트 리스너 연결(사용자 입장/퇴장 알림 표시)
+-->

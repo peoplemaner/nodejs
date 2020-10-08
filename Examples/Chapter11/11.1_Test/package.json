@@ -1,0 +1,35 @@
+{
+  "name": "nodebird",
+  "version": "0.0.1",
+  "description": "\"익스프레스 SNS 서비스\"",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon server",
+    "test": "jest",
+    "coverage": "jest --coverage"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "mysql2": "^2.2.5",
+    "nunjucks": "^3.2.2",
+    "passport": "^0.4.1",
+    "passport-kakao": "^1.0.0",
+    "passport-local": "^1.0.0",
+    "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0"
+  },
+  "devDependencies": {
+    "artillery": "^1.6.1",
+    "jest": "^26.4.2",
+    "nodemon": "^2.0.4",
+    "supertest": "^5.0.0"
+  }
+}

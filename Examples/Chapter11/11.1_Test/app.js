@@ -83,6 +83,4 @@ app.use((error, req, res, next) => {
     res.render('error');
 });
 
-app.listen(app.get('port'), () => {
-    console.log(app.get('port'), 'port Server listening');
-});
+module.exports = app;
