@@ -15,3 +15,5 @@ function not1(x) {
 }
 
 const not2 = x => !x;
+
+const d = 1;
