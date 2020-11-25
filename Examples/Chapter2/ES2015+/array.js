@@ -9,3 +9,4 @@ console.log(node2);
 console.log(obj2);
 console.log(number);
 console.log(boolean);
+console.log('구조분해할당');
