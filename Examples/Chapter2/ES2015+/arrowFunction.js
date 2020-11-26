@@ -14,6 +14,4 @@ function not1(x) {
     return !x;
 }
 
-//ddddddddddddddddddddd
-
 const not2 = x => !x;
